@@ -59,7 +59,7 @@ class Analytics
         $answer = $this->performQuery(
             $startDate,
             $endDate,
-            'ga:visits,ga:pageviews',
+            'ga:visits,ga:pageviews',//,ga:avgSessionDuration
             ['dimensions' => 'ga:'.$groupBy]
         );
 
@@ -74,6 +74,7 @@ class Analytics
                 $groupBy    => Carbon::createFromFormat(($groupBy == 'yearMonth' ? 'Ym' : 'Ymd'), $dateRow[0]),
                 'visitors'  => $dateRow[1],
                 'pageViews' => $dateRow[2],
+                //'averageTime' => $dateRow[3],
             ];
         }
 
