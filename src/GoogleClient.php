@@ -15,6 +15,17 @@ class GoogleClient
     protected $service;
 
     /**
+     * @var string
+     */
+    protected $cachePrefix = 'spatie.laravel-analytics.';
+    
+    /**
+     * @var string
+     */
+    protected $realTimeCachePrefix = 'spatie.laravel-analytics.RealTime.';
+    
+    
+    /**
      * @var \Spatie\Analytics\Cache
      */
     protected $cache;
@@ -147,6 +158,22 @@ class GoogleClient
     }
 
     /**
+     * Set the cache name prefix.
+     *
+     * @param int $cachePrefix
+     *
+     * @return self
+     */
+    public function setCachePrefix($cachePrefix = null)
+    {
+        if (!empty($cachePrefix)) {
+            $this->cachePrefix = $cachePrefix;
+        }
+        
+        return $this;
+    }
+
+    /**
      * Determine the cache name for the set of query properties given.
      *
      * @param array $properties
@@ -155,7 +182,7 @@ class GoogleClient
      */
     protected function determineCacheName(array $properties)
     {
-        return 'spatie.laravel-analytics.'.md5(serialize($properties));
+        return $this->cachePrefix . md5(serialize($properties));
     }
 
     /**
@@ -183,6 +210,22 @@ class GoogleClient
     }
 
     /**
+     * Set the real time cache name prefix.
+     *
+     * @param int $cachePrefix
+     *
+     * @return self
+     */
+    public function setRealTimeCachePrefix($cachePrefix = null)
+    {
+        if (!empty($realTimeCachePrefix)) {
+            $this->realTimeCachePrefix = $realTimeCachePrefix;
+        }
+        
+        return $this;
+    }
+    
+    /**
      * Determine the cache name for RealTime function calls for the set of query properties given.
      *
      * @param array $properties
@@ -191,7 +234,7 @@ class GoogleClient
      */
     protected function determineRealTimeCacheName(array $properties)
     {
-        return 'spatie.laravel-analytics.RealTime.'.md5(serialize($properties));
+        return $this->realTimeCachePrefix . md5(serialize($properties));
     }
 
     /**

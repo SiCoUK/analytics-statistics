@@ -423,7 +423,7 @@ class Analytics
      * @return \Spatie\Analytics\Analytics
      */
     public static function create($siteId, $clientId, $serviceEmail, $certificatePath, Cache $cache = null,
-        $cacheLifetimeInMinutes = 0, $realTimeCacheLifetime = 0
+        $cacheLifetimeInMinutes = 0, $realTimeCacheLifetime = 0, $cachePrefix = null, $realTimeCachePrefix = null
     ) {
         if (!file_exists($certificatePath)) {
             throw new Exception("Can't find the .p12 certificate in: $certificatePath");
@@ -449,7 +449,9 @@ class Analytics
         $googleApi = new GoogleClient($client, $cache);
 
         $googleApi
+            ->setCachePrefix($cachePrefix)
             ->setCacheLifeTimeInMinutes($cacheLifetimeInMinutes)
+            ->setRealTimeCachePrefix($realTimeCachePrefix)
             ->setRealTimeCacheLifeTimeInMinutes($realTimeCacheLifetime);
 
         return new static($googleApi, $siteId);
